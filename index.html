@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>heismar.eth - Blockchain Consultant & Tech Innovator</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .container {
+        padding: 0 2rem;
+      }
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .header.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3B82F6;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo .logo-text {
+      color: #1E293B;
+    }
+
+    .logo .eth {
+      color: #8B5CF6;
+    }
+
+    .nav {
+      display: none;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #1E293B;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav a:hover {
+      color: #3B82F6;
+    }
+
+    .mobile-menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: #1E293B;
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: #1E293B;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      color: #3B82F6;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.4));
+      z-index: 10;
+    }
+
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      cursor: crosshair;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+    }
+
+    .hero-tooltip {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      z-index: 20;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-tooltip-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      font-size: 0.875rem;
+    }
+
+    .hero-tooltip-pulse {
+      width: 0.5rem;
+      height: 0.5rem;
+      background: #3B82F6;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hero-tooltip-desc {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .hero-text {
+      order: 2;
+    }
+
+    .hero-image {
+      order: 1;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-text {
+        order: 1;
+      }
+
+      .hero-image {
+        order: 2;
+      }
+    }
+
+    .hero-badge {
+      margin-bottom: 1rem;
+    }
+
+    .tech-badge {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3B82F6;
+      font-weight: 500;
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      backdrop-filter: blur(12px);
+      font-size: 0.875rem;
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 640px) {
+      .hero-text h1 {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-text h1 {
+        font-size: 3.75rem;
+      }
+    }
+
+    .hero-text .gradient-text {
+      background: linear-gradient(to right, #3B82F6, #8B5CF6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #d1d5db;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 640px) {
+      .hero-subtitle {
+        font-size: 1.5rem;
+      }
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: #d1d5db;
+      margin-bottom: 2rem;
+      max-width: 42rem;
+      backdrop-filter: blur(12px);
+      background: rgba(17, 24, 39, 0.3);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-align: left;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .hero-buttons {
+        flex-direction: row;
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, #3B82F6, #8B5CF6);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .profile-container {
+      position: relative;
+    }
+
+    .profile-ring-animated {
+      position: absolute;
+      top: -1.5rem;
+      left: -1.5rem;
+      width: 16rem;
+      height: 16rem;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #3B82F6, #8B5CF6);
+      opacity: 0.2;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @media (min-width: 640px) {
+      .profile-ring-animated {
+        width: 20rem;
+        height: 20rem;
+      }
+    }
+
+    .profile-image-container {
+      width: 16rem;
+      height: 16rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(13px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (min-width: 640px) {
+      .profile-image-container {
+        width: 20rem;
+        height: 20rem;
+      }
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-badge {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      z-index: 20;
+    }
+
+    .profile-badge-bottom {
+      bottom: -1rem;
+      right: -1rem;
+    }
+
+    .profile-badge-top {
+      top: -1rem;
+      right: -1rem;
+    }
+
+    .profile-badge-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 0.1;
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* About Section */
+    .about {
+      padding: 5rem 0;
+      background: #f9fafb;
+    }
+
+    .section-header {
+      max-width: 768px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .section-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    .section-divider {
+      width: 5rem;
+      height: 4px;
+      background: #3B82F6;
+      margin: 0 auto 2rem;
+    }
+
+    .section-desc {
+      font-size: 1.125rem;
+      color: #4b5563;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .about-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content p {
+      color: #4b5563;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .social-links a {
+      color: #1E293B;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #3B82F6;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat-card h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card p {
+      color: #4b5563;
+      text-align: left;
+    }
+
+    /* Skills Section */
+    .skills {
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skills-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.05;
+    }
+
+    .skills-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .skills-category {
+      margin-bottom: 5rem;
+    }
+
+    .skills-category h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(to right, #3B82F6, #8B5CF6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .skill-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      z-index: 20;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .skill-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.75rem;
+      font-size: 1.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .skill-card h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1E293B;
+    }
+
+    .skill-card p {
+      color: #4b5563;
+      text-align: left;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 5rem 0;
+      background: #1E293B;
+      color: white;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .service-card {
+      background: #374151;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .service-icon {
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59, 130, 246, 0.2);
+      color: #3B82F6;
+      border-radius: 0.5rem;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .service-card p {
+      color: #d1d5db;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-features i {
+      color: #10B981;
+      margin: 0.125rem 0.5rem 0 0;
+    }
+
+    .services-cta {
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    .services-cta p {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #d1d5db;
+      margin-bottom: 2rem;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 5rem 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .contact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .contact-info, .contact-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-info h3, .contact-form h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .contact-item i {
+      color: #3B82F6;
+      margin: 0.125rem 1rem 0 0;
+    }
+
+    .contact-item p {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-item a {
+      color: #3B82F6;
+      text-decoration: none;
+    }
+
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: #4b5563;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .social-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      color: #1E293B;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: #3B82F6;
+      color: white;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    /* Utility Classes */
+    .text-left {
+      text-align: left;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .block {
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .md\\:hidden {
+        display: none;
+      }
+
+      .md\\:block {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="#" class="logo" onclick="scrollTo('top')">
+          <i class="fas fa-cubes"></i>
+          <span class="logo-text">heismar<span class="eth">.eth</span></span>
+        </a>
+
+        <nav class="nav">
+          <a href="#about" onclick="scrollTo('about')">About</a>
+          <a href="#skills" onclick="scrollTo('skills')">Skills</a>
+          <a href="#services" onclick="scrollTo('services')">Services</a>
+          <a href="#contact" onclick="scrollTo('contact')">Contact</a>
+        </nav>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars" id="menu-icon"></i>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="#about" onclick="scrollTo('about'); closeMobileMenu()">About</a>
+        <a href="#skills" onclick="scrollTo('skills'); closeMobileMenu()">Skills</a>
+        <a href="#services" onclick="scrollTo('services'); closeMobileMenu()">Services</a>
+        <a href="#contact" onclick="scrollTo('contact'); closeMobileMenu()">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <!-- Interactive Blockchain Network Visualization -->
+    <div class="hero-bg">
+      <div class="hero-overlay"></div>
+      <canvas id="blockchain-canvas" class="hero-canvas"></canvas>
+      
+      <div class="hero-tooltip">
+        <div class="hero-tooltip-title">
+          <div class="hero-tooltip-pulse"></div>
+          <span>Interactive Blockchain Network</span>
+        </div>
+        <p class="hero-tooltip-desc">Hover to activate • Click to add nodes</p>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="tech-badge">
+              Tech Innovator & Sustainability Advocate
+            </span>
+          </div>
+          <h1>
+            Hi, I'm <span class="gradient-text">Abdulmalik</span>
+          </h1>
+          <h2 class="hero-subtitle">
+            Blockchain Consultant | Freelancer
+          </h2>
+          <p class="hero-description">
+            Building the decentralized future through innovative blockchain solutions, AI integration, and sustainable technology strategies. Committed to leveraging emerging technologies for a greener, more equitable world.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn btn-primary" onclick="scrollTo('contact')">
+              Get in Touch
+            </a>
+            <a href="#services" class="btn btn-secondary" onclick="scrollTo('services')">
+              Explore My Services
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <div class="profile-container">
+            <div class="profile-ring-animated"></div>
+            <div class="profile-image-container">
+              <img src="attached_assets/heismar.eth.png" 
+                   alt="Abdulmalik Iyiola - Blockchain Consultant & Freelancer" 
+                   class="profile-image"
+                   id="profile-image">
+            </div>
+            <div class="profile-badge profile-badge-bottom">
+              <div class="profile-badge-content">
+                <i class="fas fa-code" style="color: #3B82F6;"></i>
+                <span>Blockchain & AI Expert</span>
+              </div>
+            </div>
+            <div class="profile-badge profile-badge-top">
+              <div class="profile-badge-content">
+                <i class="fas fa-leaf" style="color: #10B981;"></i>
+                <span>Sustainability Advocate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Meet Mar</h2>
+        <div class="section-divider"></div>
+        <p class="section-desc">
+          I'm Abdulmalik, a Tech Innovator with over 5 years of experience in blockchain technology and its transformative potential. With deep expertise in Smart Contract Design, Web3 Integration, and AI-driven solutions, I'm passionate about leveraging emerging technologies for sustainable development and positive global impact.
+        </p>
+      </div>
+      
+      <div class="about-grid">
+        <div class="about-content">
+          <h3>Discovery</h3>
+          <p>
+            As co-founder of Lassonde Blockchain Association, I built a thriving community of 200+ students and experts dedicated to blockchain education and innovation. During my 6+ years as a Blockchain Consultant, I've successfully delivered over 15 enterprise-level projects with a 98% client satisfaction rate and contributed to 3 open-source blockchain frameworks.
+          </p>
+          <p>
+            My freelance expertise spans beyond technical development to include Community Management (growing online communities by 150%+), Computer/Web & Field Technical support (resolving 500+ technical issues), Virtual Administrative Assistance, and Customer Support (maintaining a 4.9/5 client rating), allowing me to provide truly comprehensive solutions to diverse client needs.
+          </p>
+          <p>
+            Through my writings and research on emerging technologies, I've shared insights with 10,000+ readers on how blockchain, AI, and sustainable tech can address pressing global challenges and shape a better future.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/abdulmalikiyiola" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com/heismar05" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://substack.com" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+              <i class="fas fa-newspaper"></i>
+            </a>
+            <a href="https://medium.com" target="_blank" rel="noopener noreferrer" aria-label="Medium">
+              <i class="fab fa-medium"></i>
+            </a>
+            <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit">
+              <i class="fab fa-reddit"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3B82F6;">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h4>Innovative</h4>
+            <p>Created 12+ groundbreaking blockchain solutions</p>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4>Secure</h4>
+            <p>100% security record across all smart contracts</p>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8B5CF6;">
+              <i class="fas fa-code"></i>
+            </div>
+            <h4>Technical</h4>
+            <p>Mastery of 8+ programming languages & frameworks</p>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">
+              <i class="fas fa-users"></i>
+            </div>
+            <h4>Collaborative</h4>
+            <p>Led 5+ cross-functional teams to project success</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills">
+    <div class="container skills-content">
+      <div class="section-header">
+        <h2 class="section-title">My Skills</h2>
+        <div class="section-divider" style="background: linear-gradient(to right, #3B82F6, #8B5CF6);"></div>
+        <p class="section-desc">
+          With expertise across blockchain technology, AI integration, sustainability, and freelance services, I bring a diverse and future-focused skill set to every project.
+        </p>
+      </div>
+      
+      <div class="skills-category">
+        <h3>Blockchain & Tech Expertise</h3>
+        
+        <div class="skills-grid" id="blockchain-skills">
+          <!-- Skills will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="skills-category">
+        <h3 style="background: linear-gradient(to right, #10B981, #3B82F6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Freelance Services</h3>
+        
+        <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));" id="freelance-skills">
+          <!-- Skills will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" style="color: white;">Core Offerings</h2>
+        <div class="section-divider"></div>
+        <p class="section-desc" style="color: #d1d5db;">
+          Specialized services designed to help businesses and individuals navigate the blockchain ecosystem and beyond.
+        </p>
+      </div>
+      
+      <div class="services-grid" id="services-grid">
+        <!-- Services will be populated by JavaScript -->
+      </div>
+      
+      <div class="services-cta">
+        <p>Available for new projects—let's build the future together!</p>
+        <a href="#contact" class="btn btn-primary" onclick="scrollTo('contact')">
+          Start a Conversation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="section-divider"></div>
+        <p class="section-desc">
+          Ready to discuss your project? Reach out and let's explore how we can work together.
+        </p>
+      </div>
+      
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <p>Email</p>
+              <a href="mailto:hi@heismar.eth">hi@heismar.eth</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <p>Location</p>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-globe-americas" style="font-size: 0.875rem; color: #6b7280;"></i>
+                <span style="color: #4b5563;">Available for remote work worldwide</span>
+              </div>
+              <div style="display: flex; align-items: center; margin-top: 0.25rem; gap: 0.25rem; color: #4b5563;">
+                <span style="color: #dc2626;">🍁</span>
+                <span style="font-weight: 500;">Canada</span>
+                <span style="padding: 0.125rem 0.5rem; background: rgba(220, 38, 38, 0.1); color: #dc2626; font-size: 0.75rem; font-weight: 500; border-radius: 9999px;">Local</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <p>Working Hours</p>
+              <span style="color: #4b5563;">Monday - Friday: 9AM - 6PM</span>
+            </div>
+          </div>
+          <div class="contact-item" style="margin-top: 1.5rem;">
+            <i class="fas fa-share-alt"></i>
+            <div>
+              <p style="margin-bottom: 0.5rem;">Follow Me</p>
+              <div class="contact-social">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
+                  <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://medium.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Medium">
+                  <i class="fab fa-medium-m"></i>
+                </a>
+                <a href="https://substack.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Substack">
+                  <i class="fas fa-newspaper"></i>
+                </a>
+                <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Reddit">
+                  <i class="fab fa-reddit-alien"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-form">
+          <h3>Send Me a Message</h3>
+          <form id="contact-form" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="What is this regarding?">
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me about your project or inquiry" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Abdulmalik Iyiola (heismar.eth). All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Data
+    const blockchainSkills = [
+      {
+        title: "Blockchain Development",
+        icon: "fa-cubes",
+        description: "Building secure, scalable blockchain solutions using cutting-edge protocols and frameworks.",
+        color: "#3B82F6",
+        logo: "fab fa-ethereum"
+      },
+      {
+        title: "Smart Contract Design",
+        icon: "fa-file-contract",
+        description: "Developing efficient, secure smart contracts for various blockchain platforms.",
+        color: "#8B5CF6",
+        logo: "fab fa-ethereum"
+      },
+      {
+        title: "Web3 Integration",
+        icon: "fa-globe",
+        description: "Connecting traditional web applications with decentralized technologies and networks.",
+        color: "#10B981",
+        logo: "fab fa-node-js"
+      },
+      {
+        title: "Tech Strategy",
+        icon: "fa-chess",
+        description: "Developing technology roadmaps and implementation strategies for blockchain adoption.",
+        color: "#F59E0B",
+        logo: "fas fa-sitemap"
+      },
+      {
+        title: "Cryptography",
+        icon: "fa-lock",
+        description: "Implementing secure cryptographic solutions to protect data and transactions.",
+        color: "#EC4899",
+        logo: "fas fa-key"
+      },
+      {
+        title: "Innovation Consulting",
+        icon: "fa-lightbulb",
+        description: "Guiding businesses to leverage blockchain for competitive advantage and new opportunities.",
+        color: "#0EA5E9",
+        logo: "fas fa-rocket"
+      },
+      {
+        title: "Financial Education",
+        icon: "fa-chart-line",
+        description: "Empowering individuals and organizations with knowledge about blockchain finance and investing.",
+        color: "#14B8A6",
+        logo: "fas fa-university"
+      },
+      {
+        title: "Sustainability",
+        icon: "fa-leaf",
+        description: "Implementing eco-friendly blockchain solutions that minimize environmental impact.",
+        color: "#22C55E",
+        logo: "fas fa-seedling"
+      }
+    ];
+
+    const freelanceSkills = [
+      {
+        title: "Computer/Web Technician",
+        icon: "fa-laptop-code",
+        description: "Technical support and troubleshooting for various computer and web-related issues.",
+        color: "#3B82F6"
+      },
+      {
+        title: "Field Technician",
+        icon: "fa-tools",
+        description: "On-site technical support, hardware installation, and network infrastructure setup.",
+        color: "#8B5CF6"
+      },
+      {
+        title: "Virtual Administrative Assistant",
+        icon: "fa-tasks",
+        description: "Remote administrative support, scheduling, data entry, and organizational tasks.",
+        color: "#10B981"
+      },
+      {
+        title: "Customer Support Specialist",
+        icon: "fa-headset",
+        description: "Professional customer service, issue resolution, and client relationship management.",
+        color: "#F59E0B"
+      },
+      {
+        title: "Community Management",
+        icon: "fa-users-cog",
+        description: "Building and nurturing online communities, fostering engagement and facilitating growth.",
+        color: "#EC4899"
+      }
+    ];
+
+    const services = [
+      {
+        title: "Blockchain Strategy & Implementation",
+        icon: "fa-sitemap",
+        description: "Comprehensive strategy development and implementation planning for blockchain adoption, tailored to your specific business needs and goals.",
+        features: [
+          "Blockchain readiness assessment",
+          "Use case identification",
+          "Implementation roadmap"
+        ]
+      },
+      {
+        title: "Smart Contract Development & Auditing",
+        icon: "fa-file-contract",
+        description: "Design, development, and thorough auditing of secure smart contracts for various blockchain platforms, ensuring reliability and efficiency.",
+        features: [
+          "Custom smart contract development",
+          "Security testing & vulnerability assessment",
+          "Contract optimization & gas efficiency"
+        ]
+      },
+      {
+        title: "Decentralized App (dApp) Design",
+        icon: "fa-mobile-alt",
+        description: "End-to-end development of user-friendly decentralized applications that harness blockchain capabilities while providing intuitive user experiences.",
+        features: [
+          "dApp architecture planning",
+          "Front-end & UI/UX design",
+          "Web3 integration & testing"
+        ]
+      },
+      {
+        title: "Tech Innovation Consulting",
+        icon: "fa-lightbulb",
+        description: "Strategic guidance on leveraging emerging technologies to drive innovation and gain competitive advantage in your industry.",
+        features: [
+          "Technology trend analysis",
+          "Innovation workshops",
+          "Digital transformation planning"
+        ]
+      },
+      {
+        title: "Technical Support Services",
+        icon: "fa-laptop-code",
+        description: "Comprehensive technical support for computer hardware, software, and web applications to ensure smooth operations and minimal downtime.",
+        features: [
+          "Hardware troubleshooting",
+          "Software installation & configuration",
+          "Network setup & maintenance"
+        ]
+      },
+      {
+        title: "Virtual Administration",
+        icon: "fa-tasks",
+        description: "Remote administrative support to streamline operations, manage tasks, and improve organizational efficiency.",
+        features: [
+          "Calendar management & scheduling",
+          "Data entry & organization",
+          "Email & communication management"
+        ]
+      },
+      {
+        title: "Community Management",
+        icon: "fa-users",
+        description: "Building and nurturing online communities for your blockchain project, fostering engagement and facilitating sustainable growth.",
+        features: [
+          "Community strategy development",
+          "Content creation & moderation",
+          "Member engagement & retention"
+        ]
+      }
+    ];
+
+    // Interactive Blockchain Network
+    class BlockchainNetwork {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.nodes = [];
+        this.mouse = { x: 0, y: 0 };
+        this.animationId = null;
+        
+        this.init();
+        this.setupEventListeners();
+        this.animate();
+      }
+
+      init() {
+        this.resizeCanvas();
+        window.addEventListener('resize', () => this.resizeCanvas());
+        
+        const colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444'];
+        
+        for (let i = 0; i < 12; i++) {
+          this.nodes.push({
+            id: i,
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            connections: [],
+            isActive: false
+          });
+        }
+
+        // Create connections
+        this.nodes.forEach((node, i) => {
+          this.nodes.forEach((other, j) => {
+            if (i !== j) {
+              const distance = Math.sqrt(
+                Math.pow(node.x - other.x, 2) + Math.pow(node.y - other.y, 2)
+              );
+              if (distance < 150 && Math.random() > 0.7) {
+                node.connections.push(j);
+              }
+            }
+          });
+        });
+      }
+
+      resizeCanvas() {
+        const rect = this.canvas.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+      }
+
+      setupEventListeners() {
+        this.canvas.addEventListener('mousemove', (e) => {
+          const rect = this.canvas.getBoundingClientRect();
+          this.mouse.x = e.clientX - rect.left;
+          this.mouse.y = e.clientY - rect.top;
+        });
+
+        this.canvas.addEventListener('click', (e) => {
+          const rect = this.canvas.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const clickY = e.clientY - rect.top;
+          
+          const colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444'];
+          
+          const newNode = {
+            id: this.nodes.length,
+            x: clickX,
+            y: clickY,
+            vx: (Math.random() - 0.5) * 0.8,
+            vy: (Math.random() - 0.5) * 0.8,
+            radius: Math.random() * 6 + 5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            connections: [],
+            isActive: true
+          };
+
+          // Connect to nearby nodes
+          this.nodes.forEach((node, i) => {
+            const distance = Math.sqrt(
+              Math.pow(newNode.x - node.x, 2) + Math.pow(newNode.y - node.y, 2)
+            );
+            if (distance < 120) {
+              newNode.connections.push(i);
+              if (!node.connections.includes(newNode.id)) {
+                node.connections.push(newNode.id);
+              }
+            }
+          });
+
+          this.nodes.push(newNode);
+        });
+      }
+
+      animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Update nodes
+        this.nodes.forEach(node => {
+          // Update position
+          node.x += node.vx;
+          node.y += node.vy;
+
+          // Bounce off walls
+          if (node.x <= node.radius || node.x >= this.canvas.width - node.radius) {
+            node.vx = -node.vx;
+          }
+          if (node.y <= node.radius || node.y >= this.canvas.height - node.radius) {
+            node.vy = -node.vy;
+          }
+
+          // Keep within bounds
+          node.x = Math.max(node.radius, Math.min(this.canvas.width - node.radius, node.x));
+          node.y = Math.max(node.radius, Math.min(this.canvas.height - node.radius, node.y));
+
+          // Check mouse interaction
+          const mouseDistance = Math.sqrt(
+            Math.pow(this.mouse.x - node.x, 2) + Math.pow(this.mouse.y - node.y, 2)
+          );
+          node.isActive = mouseDistance < 80;
+        });
+
+        // Draw connections
+        this.nodes.forEach(node => {
+          node.connections.forEach(connectionId => {
+            const connectedNode = this.nodes[connectionId];
+            if (connectedNode) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(node.x, node.y);
+              this.ctx.lineTo(connectedNode.x, connectedNode.y);
+              this.ctx.strokeStyle = node.isActive || connectedNode.isActive 
+                ? `${node.color}60` 
+                : `${node.color}20`;
+              this.ctx.lineWidth = node.isActive || connectedNode.isActive ? 2 : 1;
+              this.ctx.stroke();
+            }
+          });
+        });
+
+        // Draw nodes
+        this.nodes.forEach(node => {
+          // Outer glow for active nodes
+          if (node.isActive) {
+            this.ctx.beginPath();
+            this.ctx.arc(node.x, node.y, node.radius + 8, 0, Math.PI * 2);
+            this.ctx.fillStyle = `${node.color}30`;
+            this.ctx.fill();
+          }
+
+          // Main node
+          this.ctx.beginPath();
+          this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+          this.ctx.fillStyle = node.isActive ? node.color : `${node.color}80`;
+          this.ctx.fill();
+
+          // Inner highlight
+          this.ctx.beginPath();
+          this.ctx.arc(node.x - 2, node.y - 2, node.radius * 0.3, 0, Math.PI * 2);
+          this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+          this.ctx.fill();
+
+          // Data flow animation for active nodes
+          if (node.isActive) {
+            const time = Date.now() * 0.005;
+            for (let i = 0; i < 3; i++) {
+              const angle = (time + i * Math.PI * 2 / 3) % (Math.PI * 2);
+              const x = node.x + Math.cos(angle) * (node.radius + 15);
+              const y = node.y + Math.sin(angle) * (node.radius + 15);
+              
+              this.ctx.beginPath();
+              this.ctx.arc(x, y, 2, 0, Math.PI * 2);
+              this.ctx.fillStyle = node.color;
+              this.ctx.fill();
+            }
+          }
+        });
+
+        this.animationId = requestAnimationFrame(() => this.animate());
+      }
+
+      destroy() {
+        if (this.animationId) {
+          cancelAnimationFrame(this.animationId);
+        }
+      }
+    }
+
+    // Initialize blockchain network when page loads
+    let blockchainNetwork;
+    document.addEventListener('DOMContentLoaded', function() {
+      const canvas = document.getElementById('blockchain-canvas');
+      if (canvas) {
+        blockchainNetwork = new BlockchainNetwork(canvas);
+      }
+
+      // Populate skills
+      populateSkills();
+      populateServices();
+
+      // Header scroll effect
+      window.addEventListener('scroll', function() {
+        const header = document.getElementById('header');
+        if (window.scrollY > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      // Set profile image (you'll need to replace this with actual image data or URL)
+      const profileImg = document.getElementById('profile-image');
+      // Replace this with your actual image URL or base64 data
+      profileImg.src = 'attached_assets/heismar.eth.png';
+    });
+
+    // Populate skills function
+    function populateSkills() {
+      const blockchainContainer = document.getElementById('blockchain-skills');
+      const freelanceContainer = document.getElementById('freelance-skills');
+
+      blockchainSkills.forEach((skill, index) => {
+        const skillElement = document.createElement('div');
+        skillElement.className = 'skill-card';
+        skillElement.style.setProperty('--skill-color', skill.color);
+        
+        skillElement.innerHTML = `
+          <div class="skill-header">
+            <div class="skill-icon" style="background: ${skill.color}10; color: ${skill.color};">
+              <i class="fas ${skill.icon}"></i>
+            </div>
+            <h4>${skill.title}</h4>
+          </div>
+          <p>${skill.description}</p>
+        `;
+        
+        skillElement.addEventListener('mouseenter', function() {
+          this.style.setProperty('--hover-bg', `${skill.color}10`);
+          this.style.background = `var(--hover-bg)`;
+        });
+        
+        skillElement.addEventListener('mouseleave', function() {
+          this.style.background = 'rgba(255, 255, 255, 0.8)';
+        });
+
+        blockchainContainer.appendChild(skillElement);
+      });
+
+      freelanceSkills.forEach((skill, index) => {
+        const skillElement = document.createElement('div');
+        skillElement.className = 'skill-card';
+        
+        skillElement.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem; margin-bottom: 1rem;">
+            <div class="skill-icon" style="background: ${skill.color}15; color: ${skill.color}; width: 4rem; height: 4rem; font-size: 1.5rem;">
+              <i class="fas ${skill.icon}"></i>
+            </div>
+            <h4>${skill.title}</h4>
+          </div>
+          <p style="text-align: center;">${skill.description}</p>
+        `;
+
+        freelanceContainer.appendChild(skillElement);
+      });
+    }
+
+    // Populate services function
+    function populateServices() {
+      const servicesContainer = document.getElementById('services-grid');
+
+      services.forEach((service, index) => {
+        const serviceElement = document.createElement('div');
+        serviceElement.className = 'service-card';
+        
+        serviceElement.innerHTML = `
+          <div class="service-icon">
+            <i class="fas ${service.icon}"></i>
+          </div>
+          <h3>${service.title}</h3>
+          <p>${service.description}</p>
+          <ul class="service-features">
+            ${service.features.map(feature => `
+              <li>
+                <i class="fas fa-check"></i>
+                <span>${feature}</span>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+
+        servicesContainer.appendChild(serviceElement);
+      });
+    }
+
+    // Navigation functions
+    function scrollTo(elementId) {
+      if (elementId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenu.classList.remove('open');
+        menuIcon.className = 'fas fa-bars';
+      } else {
+        mobileMenu.classList.add('open');
+        menuIcon.className = 'fas fa-times';
+      }
+    }
+
+    function closeMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      
+      mobileMenu.classList.remove('open');
+      menuIcon.className = 'fas fa-bars';
+    }
+
+    // Form handling
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('submit-btn');
+      const form = document.getElementById('contact-form');
+      
+      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission (replace with actual form handling)
+      setTimeout(() => {
+        alert('Thank you for your message! I\'ll get back to you soon.');
+        form.reset();
+        submitBtn.textContent = 'Send Message';
+        submitBtn.disabled = false;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
